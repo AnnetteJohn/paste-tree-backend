@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const Special = require("../models/specials")
 const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
@@ -25,9 +26,47 @@ exports.createProduct =
  {
  
   const product = new Product(req.body);
-
+  product.special = req.body.special;
+  
   product.productImagePath = req.file.path;
- 
+
+  
+//   product.save((err, product) => 
+//   {
+//     if (err) {
+//         if(err.code === 11000 || err.code === 11001)
+//         {
+//           return res.status(400).json({
+//             error: "Duplicate Value " +req.body.name +",Value must be unique",
+          
+//           });
+//         }
+//         else
+//         {
+//           return res.status(400).json({
+//             error: "NOT able to save category in DBs",
+//             messgae : err
+          
+//           });
+//         }
+//     }
+    
+
+//     Special.findOne({special : product.special}).exec((err, special) => {
+//         if (special) {
+//             // The below two lines will add the newly saved review's 
+//             // ObjectID to the the User's reviews array field
+//             special.products.push(product);
+//             special.save();
+//             res.json({ message: 'Special  created!' });
+//         }
+//     });
+//   })
+  
+//     res.status(500).json({ error });
+  
+//  }
+
   product.save((err, product) => 
   {
     if (err) 
@@ -84,11 +123,51 @@ exports.getProductById = (req, res, next, id) => {
     });
 };
 
+exports.getProductByCategoryId = (req, res, next, id) => {
+  Product.find({special : req.params.specialId})
+    .exec((err, product) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Product not found"
+        });
+      }
+      req.product = product;
+      next();
+    });
+}
+
+
+exports.getProductByMenuItemId = (req, res, next, id) => {
+  Product.find({menuItem : req.params.menuItemId})
+    .exec((err, product) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Product not found"
+        });
+      }
+      req.product = product;
+      next();
+    });
+}
+
 
 exports.getProduct = (req, res) => {
-    req.product.photo = undefined;
+    // req.product.photo = undefined;
     return res.json(req.product);
   };
+
+
+exports.getProductByCategory = (req, res) => {
+    // req.product.photo = undefined;
+    return res.json(req.product);
+  };
+
+exports.getProductByMenuItem = (req, res) => {
+    // req.product.photo = undefined;
+    return res.json(req.product);
+  };
+
+
 // // delete controllers
 exports.deleteProduct = (req, res) => {
   let product = req.product;

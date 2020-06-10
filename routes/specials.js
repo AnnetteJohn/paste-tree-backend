@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router();
 
 const {getSpecialById, createSpecial, getSpecial , getAllSpecials,
-       updateSpecial, removeSpecial } = require("../controllers/specials");
+       updateSpecial, removeSpecial, getAllSpecialItems } = require("../controllers/specials");
 
 router.param("specialId", getSpecialById);
 
@@ -12,6 +12,8 @@ router.post( "/special/create",  createSpecial );
 
 //get a specific special  by id
 router.get("/special/:specialId", getSpecial);
+
+// router.get("/special/:specialId/items", getAllSpecialItems);
 
 //get all specials
 router.get("/specials", getAllSpecials);

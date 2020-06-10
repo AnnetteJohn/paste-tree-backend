@@ -21,6 +21,10 @@ const {
   photo,
   updateProduct,
   deleteProduct,
+  getProductByCategoryId,
+  getProductByCategory,
+  getProductByMenuItem,
+  getProductByMenuItemId,
   getAllProducts,
   getAllUniqueCategories
 } = require("../controllers/product");
@@ -29,6 +33,8 @@ const {
 //all of params
 
 router.param("productId", getProductById);
+router.param("specialId", getProductByCategoryId);
+router.param("menuItemId", getProductByMenuItemId);
 
 //all of actual routes
 //create route
@@ -52,6 +58,11 @@ router.get(
 
 // // read routes
 router.get("/product/:productId", getProduct);
+
+router.get("/product/special/:specialId", getProductByCategory);
+
+router.get("/product/menu/:menuItemId", getProductByMenuItem);
+
 
 
 // //delete route

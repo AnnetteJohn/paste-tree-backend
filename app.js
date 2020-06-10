@@ -27,13 +27,15 @@ const authRoutes = require("./routes/auth");
 const orderRoutes = require("./routes/order");
 
 
+
+
 app.use("/api", menuRoutes);
 app.use("/api", specialsRoutes);
 app.use("/api", authRoutes);
 app.use("/api", productRoutes);
 app.use("/api", addonRoutes);
 app.use("/api" , orderRoutes);
- app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 
 

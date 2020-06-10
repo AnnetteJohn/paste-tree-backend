@@ -38,8 +38,27 @@ const Special = require("../models/specials")
   
 
 
+  // exports.getSpecialById = (req, res, next, id) => {
+  //   Special.findById(id).exec((err, foundSpecial) => {
+  //     if (err) {
+  //       return res.status(400).json({
+  //         error: "Category not found in DB"
+  //       });
+  //     }
+  //     req.special = foundSpecial;
+  //     next();
+  //   });
+  // };
+  
+  
+  exports.getSpecial = (req, res) => {
+    return res.json(req.special);
+  };
+
   exports.getSpecialById = (req, res, next, id) => {
-    Special.findById(id).exec((err, foundSpecial) => {
+    Special.findById(id)
+    .populate("products")    
+    .exec((err, foundSpecial) => {
       if (err) {
         return res.status(400).json({
           error: "Category not found in DB"
@@ -55,6 +74,22 @@ const Special = require("../models/specials")
     return res.json(req.special);
   };
   
+
+
+  // exports.getAllSpecialItems = (req, res, next, id) => {
+  //   Special.findById(id)
+  //     .populate("products.product", "name price")
+  //     .exec((err, item) => {
+  //       if (err) {
+  //         return res.status(400).json({
+  //           error: "NO order found in DB"
+  //         });
+  //       }
+  //       req.item = item;
+  //       next();
+  //     });
+  // };
+
   exports.getAllSpecials =
    (req, res) => 
   {
@@ -68,6 +103,11 @@ const Special = require("../models/specials")
     });
   };
   
+
+
+
+
+
   exports.updateSpecial = (req, res) => {
     
     const special = req.special;
