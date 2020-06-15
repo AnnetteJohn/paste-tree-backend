@@ -91,3 +91,25 @@ exports.getAllOrders =
   // exports.getOrderStatus = (req, res) => {
   //   const 
   // }
+
+
+
+  exports.getOrderByUserId = (req, res, next, id) => {
+    Order.find({user : req.params.userId})
+      .exec((err, order) => {
+        if (err) {
+          return res.status(400).json({
+            error: "Order not found"
+          });
+        }
+        req.order = order;
+        next();
+      });
+  }
+
+  exports.getOrderByUser = (req, res) => {
+    // req.product.photo = undefined;
+    return res.json(req.order);
+  };
+  
+  
